@@ -1,6 +1,4 @@
-//
-// Created by Lisa Liu on 8/26/23.
-//
+// Author: Lisa Liu (lisaliuu2016@gmail.com)
 
 #ifndef CHIP8_DISPLAY_H
 #define CHIP8_DISPLAY_H
