@@ -1,5 +1,5 @@
 /**
- * File name: Memory.h
+ * File name: memory.h
  * Author: Lisa (Chuci) Liu
  */
 
@@ -8,9 +8,6 @@
 
 #include <array>
 #include <string>
-#include <iostream>
-#include <fstream>
-#include <sstream>
 
 /**
  * @brief   Defines the functions of the Memory class that holds
@@ -39,6 +36,8 @@ private:
     // Chip8 memory as represented by an array where each element is a byte
     std::array<uint8_t, MEM_SIZE> memoryArr;
 
+    std::string ROMP;
+
     // Chip8 font data
     const std::array<uint8_t, FONT_SET_SIZE> fonts = {
         0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
@@ -59,6 +58,10 @@ private:
         0xF0, 0x80, 0xF0, 0x80, 0x80  // F
     };
 
+
+public:
+    friend class CPU;
+
     /**
      * @brief   The constructor for the Memory class that loads the
      *          font set into memory.
@@ -68,10 +71,16 @@ private:
     /**
      * @brief   Loads the ROM at path provided into memory
      * @param   <filePath> path to the ROM file to load into memory
+     * @return  Success of loading ROM to memory
      */
-    bool loadProgram(std::string filePath);
+    bool loadProgram(const std::string& filePath);
 
-public:
-    friend class Chip8;
+    /**
+     * @brief   Access the memory contents at index in memoryArr
+     * @param   <index> index of memory to access
+     * @return  Content in memory at given index
+     */
+    uint8_t operator[](int index);
+
 };
 #endif //CHIP8_MEMORY_H
