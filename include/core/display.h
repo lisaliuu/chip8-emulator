@@ -9,12 +9,14 @@
 #include <array>
 
 class Display {
-private:
+public:
     static const unsigned int WIDTH = 64;
     static const unsigned int HEIGHT = 32;
-    std::array<uint8_t, WIDTH*HEIGHT> displayArr;
-public:
-    void draw();
+    uint8_t& operator[](int index);
+    const uint8_t& operator[](int index) const;
     void clearScreen();
+
+private:
+    std::array<uint8_t, WIDTH*HEIGHT> displayArr;
 };
 #endif //CHIP8_DISPLAY_H

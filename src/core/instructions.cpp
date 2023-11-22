@@ -3,10 +3,9 @@
  * Author: Lisa (Chuci) Liu
  */
 
-#include "instructions.h"
-#include "display.h"
-
-using namespace instructions;
+#include "core/instructions.h"
+#include "core/display.h"
+#include "core/chip8.h"
 
 void CLS(Display& display) {
     display.clearScreen();

@@ -33,6 +33,7 @@ set(SOURCE_FILES
     src/memory.cpp
     src/display.cpp
     tests/main.cpp
+    src/chip8.cpp
     )
 
 # Make the project root directory the working directory when we run
