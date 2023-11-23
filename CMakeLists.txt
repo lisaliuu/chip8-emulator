@@ -30,10 +30,10 @@ include_directories(./include)
 # Define the source files and dependencies for the executable
 set(SOURCE_FILES
     tests/memoryTest.cpp
-    src/memory.cpp
-    src/display.cpp
+        src/core/memory.cpp
+        src/core/display.cpp
     tests/main.cpp
-    src/chip8.cpp
+        src/core/chip8.cpp
     )
 
 # Make the project root directory the working directory when we run
