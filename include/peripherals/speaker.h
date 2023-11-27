@@ -1,6 +1,7 @@
-//
-// Created by Lisa Liu on 11/22/23.
-//
+/**
+ * File name: speaker.h
+ * Author: Lisa (Chuci) Liu
+ */
 
 #ifndef CHIP8_SPEAKER_H
 #define CHIP8_SPEAKER_H

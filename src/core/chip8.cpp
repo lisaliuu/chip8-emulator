@@ -1,6 +1,7 @@
-//
-// Created by Lisa Liu on 11/12/23.
-//
+/**
+ * File name: chip8.cpp
+ * Author: Lisa (Chuci) Liu
+ */
 
 #include "core/chip8.h"
 
@@ -87,10 +88,10 @@ void Chip8::DRW(const Opcode& op) {
         cpu.registers[0xF]=0;
         uint8_t drawSpriteVal = memory[cpu.i+y];
         //draw bits from most to least significant
+        uint16_t py = yStart+y;
         for(int x=0;x<8;++x){
             if(drawSpriteVal&(0b10000000>>x)){
                 uint16_t px = xStart+x;
-                uint16_t py = yStart+y;
                 uint16_t p = px+py*Display::WIDTH;
                 if(display[p]){
                     cpu.registers[0xF]=1;

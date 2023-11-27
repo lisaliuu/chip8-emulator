@@ -29,11 +29,12 @@ include_directories(${googletest_SOURCE_DIR}/googletest/include)
 include_directories(./include)
 # Define the source files and dependencies for the executable
 set(SOURCE_FILES
-    tests/memoryTest.cpp
+        tests/memoryTest.cpp
         src/core/memory.cpp
         src/core/display.cpp
-    tests/main.cpp
+        tests/main.cpp
         src/core/chip8.cpp
+        src/peripherals/window.cpp
     )
 
 # Make the project root directory the working directory when we run

@@ -1,5 +1,6 @@
-//
-// Created by Lisa Liu on 11/22/23.
-//
+/**
+ * File name: keypad.cpp
+ * Author: Lisa (Chuci) Liu
+ */
 
 #include "peripherals/keypad.h"

@@ -1,6 +1,7 @@
-//
-// Created by Lisa Liu on 11/12/23.
-//
+/**
+ * File name: chip8.h
+ * Author: Lisa (Chuci) Liu
+ */
 
 #ifndef CHIP8_CHIP8_H
 #define CHIP8_CHIP8_H
@@ -10,7 +11,14 @@
 #include "display.h"
 #include "memory.h"
 
+
+/**
+ * @struct Cpu
+ * @brief This struct holds variables in and related to the CPU, including
+ *        registers, address pointers, timers, and stack.
+ */
 struct Cpu{
+
     static constexpr unsigned int REG_SIZE = 0x10;
     std::array<uint8_t, REG_SIZE> registers;
     std::stack<uint16_t> stack;
@@ -20,18 +28,42 @@ struct Cpu{
     uint8_t soundtimer = 0;
 };
 
+/**
+ * @struct Opcode
+ * @brief  This struct represents a Chip8 opcode with accessor methods for decoding
+ *         the opcode.
+ */
 struct Opcode{
+public:
+    // Constr
+    Opcode(uint16_t inOp);
+
+    // Accesses the second nibble, X in register VX.
+    uint8_t getX() const;
+
+    // Accesses the third nibble, Y in register VY.
+    uint8_t getY() const;
+
+    // Accesses the fourth nibble.
+    uint8_t getN() const; // fourth nibble
+
+    // Accesses the third and fourth nibble.
+    uint8_t getNN() const;
+
+    // Accesses the second, third, and fourth nibble.
+    uint16_t getNNN() const;
+
 private:
     uint16_t rawInstr;
-public:
-    Opcode(uint16_t inOp);
-    uint8_t getX() const; // second nibble, X in register VX
-    uint8_t getY() const; // third nibble, Y in register VY
-    uint8_t getN() const; // fourth nibble
-    uint8_t getNN() const; // third, fourth nibble
-    uint16_t getNNN() const; // second, third, fourth nibble
 };
 
+/**
+ * @brief   Defines the functions of the Memory class that holds
+ *          an array of size 4096 that represents the RAM of the Chip8
+ * @details Functionalities are creating and loading ROMs into the memory
+ *          array.
+ * @author  Lisa (Chuci) Liu
+ */
 class Chip8{
 private:
     Display display;
@@ -215,6 +247,7 @@ private:
 //        }
 //
 //    public:
+
 
 
 };
