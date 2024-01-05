@@ -21,17 +21,19 @@ public:
     // Height of display
     static const unsigned int HEIGHT = 32;
 
-    // Const subscript operator to get specified pixel in the display - checks bound.
-    const uint8_t& operator[](int index) const;
+    Display();
 
-    // Subscript operator to get specified pixel in the display - checks bound.
-    uint8_t& operator[](int index);
+    const uint32_t& operator[] (int index) const;
+
+    uint32_t& operator[] (int index);
 
     // Fills display array with 0
     void clearScreen();
 
+    uint32_t* getDisplay();
+
 private:
     // Array representing the Chip8 display where each element is a pixel.
-    std::array<uint8_t, WIDTH*HEIGHT> displayArr;
+    uint32_t displayArr [WIDTH * HEIGHT];
 };
 #endif //CHIP8_DISPLAY_H

@@ -4,17 +4,23 @@
  */
 
 #include "core/display.h"
-
-const uint8_t& Display::operator[] (int index) const{
-    return displayArr.at(index);
+Display::Display(){
+    memset(displayArr, 0, sizeof(displayArr));
 }
-
-uint8_t& Display::operator[] (int index){
-    return const_cast<uint8_t&>
-        (const_cast<const std::array<uint8_t, WIDTH*HEIGHT>&>(this->displayArr)[index]);
-}
-
 
 void Display::clearScreen(){
-    displayArr.fill(0);
+    memset(displayArr, 0, sizeof(displayArr));
+}
+
+uint32_t* Display::getDisplay(){
+    return displayArr;
+}
+
+const uint32_t& Display::operator[] (int index) const{
+    return displayArr[index];
+}
+
+uint32_t& Display::operator[] (int index){
+    return const_cast<uint32_t&>
+    (const_cast<const uint32_t*> (this->displayArr)[index]);
 }

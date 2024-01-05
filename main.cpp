@@ -1,11 +1,12 @@
 
-
-#include <iostream>
 #include <SDL.h>
+#include <peripherals/window.h>
+#include <core/display.h>
 
-int main() {
-// load ROM
+//// load ROM
+//
+//// load platform
+//// main loop
+int main(int argc, const char * argv[]) {
 
-// load platform
-// main loop
 }

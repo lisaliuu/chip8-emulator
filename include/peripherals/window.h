@@ -7,17 +7,20 @@
 #define CHIP8_WINDOW_H
 
 #include <SDL.h>
-#include <string_view>
+#include "core/display.h"
 
 class Window{
 public:
-    Window(int width, int height, std::string_view title);
+    bool running = false;
+
+    explicit Window(uint8_t scale);
     ~Window();
-    renderPixel(int x, int y, int scale);
-    getKeyboardInput();
+    void render(const uint32_t * pixels);
+    void getKeyboardInput();
 private:
     SDL_Window* window;
     SDL_Renderer* renderer;
+    SDL_Texture* texture;
 };
 
 #endif //CHIP8_WINDOW_H

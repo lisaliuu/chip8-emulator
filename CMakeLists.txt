@@ -27,7 +27,10 @@ if(NOT sdl_POPULATED)
     add_subdirectory(${sdl_SOURCE_DIR} ${sdl_BINARY_DIR})
 endif()
 include_directories(${sdl_SOURCE_DIR}/sdl/include)
-add_executable(Chip8 main.cpp)
+add_executable(Chip8 main.cpp
+        src/peripherals/window.cpp
+        src/core/display.cpp
+        )
 target_include_directories(Chip8 PRIVATE ${sdl_SOURCE_DIR}/include)
 
 # Include project headers
@@ -35,17 +38,20 @@ include_directories(./include)
 # Define the source files and dependencies for the executable
 set(SOURCE_FILES
         tests/memoryTest.cpp
+        tests/windowTest.cpp
         src/core/memory.cpp
         src/core/display.cpp
         tests/main.cpp
         src/core/chip8.cpp
         src/peripherals/window.cpp
+        main.cpp
         )
 
 # Make the project root directory the working directory when we run
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 add_executable(testing ${SOURCE_FILES})
 add_dependencies(testing gtest)
-target_link_libraries(testing gtest ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(testing gtest SDL2 ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(Chip8 SDL2 ${CMAKE_THREAD_LIBS_INIT})
 target_include_directories(testing PRIVATE ${sdl_SOURCE_DIR}/include)
 
