@@ -8,6 +8,8 @@
 
 #include <array>
 #include <stack>
+#include <chrono>
+#include <thread>
 #include "display.h"
 #include "memory.h"
 
@@ -18,14 +20,17 @@
  *        registers, address pointers, timers, and stack.
  */
 struct Cpu{
-
     static constexpr unsigned int REG_SIZE = 0x10;
     std::array<uint8_t, REG_SIZE> registers;
     std::stack<uint16_t> stack;
-    uint16_t pc = 0;
-    uint16_t i = 0;
-    uint8_t delayTimer = 0;
-    uint8_t soundtimer = 0;
+    uint16_t pc;
+    uint16_t i;
+    uint8_t delayTimer;
+    std::chrono::steady_clock::time_point prevTickTime;
+
+    Cpu();
+
+
 };
 
 /**
@@ -65,6 +70,15 @@ private:
  * @author  Lisa (Chuci) Liu
  */
 class Chip8{
+public:
+    Chip8();
+
+    void loadProgram(const std::string& filePath);
+
+    void handleTime(int frameRate);
+
+    void cycle();
+
 private:
     Display display;
     Cpu cpu;
@@ -246,9 +260,6 @@ private:
 //            cpu->regs[i] = ram[cpu->I + i];
 //        }
 //
-//    public:
-
-
 
 };
 

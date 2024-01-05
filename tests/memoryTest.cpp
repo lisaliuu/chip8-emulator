@@ -17,12 +17,13 @@ namespace {
 
     TEST_F(MemoryTest, ExtractValidFile) {
         Memory mem;
-        EXPECT_TRUE( mem.loadProgram(EXISTING_FILE_NAME));
+        ASSERT_NO_FATAL_FAILURE(mem.loadProgram(EXISTING_FILE_NAME));
     }
 
     TEST_F(MemoryTest, ExtractInvalidFile) {
         Memory mem;
-        EXPECT_FALSE(mem.loadProgram(NO_EXISTING_FILE_NAME));
+        ASSERT_EXIT({mem.loadProgram(NO_EXISTING_FILE_NAME);},
+                        ::testing::ExitedWithCode(EXIT_FAILURE),
+                        ".*");
     }
-
 }

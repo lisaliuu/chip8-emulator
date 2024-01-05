@@ -20,7 +20,7 @@ public:
     Memory();
 
      // Loads the ROM at filePath into memory.
-    bool loadProgram(const std::string& filePath);
+    void loadProgram(const std::string& filePath);
 
     // Const subscript operator to get specified element in memory - checks bound.
     const uint8_t& operator[](int index) const;

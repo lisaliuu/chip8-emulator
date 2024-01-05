@@ -17,7 +17,7 @@ Memory::Memory() {
               begin(memoryArr)+FONT_START_ADDRESS);
 }
 
-bool Memory::loadProgram(const std::string& filePath) {
+void Memory::loadProgram(const std::string& filePath) {
     try{
         std::cout<<filePath;
         // Attempt to open ROM file as binary
@@ -30,8 +30,8 @@ bool Memory::loadProgram(const std::string& filePath) {
 
         // Check file size
         if(fileLen<=0 || fileLen > MAX_ROM_SIZE){
-            std::cout<<"File is empty or of invalid file.";
-            return false;
+            std::cout<<"Failed to load ROM program. File is empty or invalid.";
+            exit(EXIT_FAILURE);
         }
 
         // Extract from file stream string
@@ -45,10 +45,9 @@ bool Memory::loadProgram(const std::string& filePath) {
     }
     catch (const std::ifstream::failure& e){
         std::cout<<"Failed to open ROM file.";
-        return false;
+        exit(EXIT_FAILURE);
     }
-
-    return true;
+    
 }
 
 uint8_t& Memory::operator[] (int index){

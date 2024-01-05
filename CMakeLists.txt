@@ -44,7 +44,6 @@ set(SOURCE_FILES
         tests/main.cpp
         src/core/chip8.cpp
         src/peripherals/window.cpp
-        main.cpp
         )
 
 # Make the project root directory the working directory when we run
