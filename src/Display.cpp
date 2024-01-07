@@ -3,17 +3,13 @@
  * Author: Lisa (Chuci) Liu
  */
 
-#include "core/display.h"
+#include "Display.h"
 Display::Display(){
     memset(displayArr, 0, sizeof(displayArr));
 }
 
 void Display::clearScreen(){
     memset(displayArr, 0, sizeof(displayArr));
-}
-
-uint32_t* Display::getDisplay(){
-    return displayArr;
 }
 
 const uint32_t& Display::operator[] (int index) const{

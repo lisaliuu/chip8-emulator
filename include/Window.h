@@ -6,8 +6,8 @@
 #ifndef CHIP8_WINDOW_H
 #define CHIP8_WINDOW_H
 
-#include <SDL.h>
-#include "core/display.h"
+#include "SDL.h"
+#include "Display.h"
 
 class Window{
 public:

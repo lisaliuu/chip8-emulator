@@ -3,7 +3,7 @@
  * Author: Lisa (Chuci) Liu
  */
 #include <iostream>
-#include "peripherals/window.h"
+#include "Window.h"
 
 Window::Window(){
     std::cout<<"Initializing SDL video and audio..."<<std::endl;

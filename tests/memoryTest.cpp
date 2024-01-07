@@ -2,7 +2,7 @@
 // Created by Lisa Liu on 9/17/23.
 //
 
-#include "core/memory.h"
+#include "memory.h"
 #include <gtest/gtest.h>
 #include <array>
 

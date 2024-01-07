@@ -1,8 +1,8 @@
 
 #include <SDL.h>
 #include <iostream>
-#include "core/chip8.h"
-#include "peripherals/window.h"
+#include "Chip8.h"
+#include "Window.h"
 
 std::pair<std::string, int> parseArgs(int argc, const char * argv[]);
 

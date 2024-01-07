@@ -2,7 +2,7 @@
 // Created by Lisa Liu on 1/1/24.
 //
 #include <gtest/gtest.h>
-#include "peripherals/window.h"
+#include "Window.h"
 
 namespace {
     class WindowTest : public ::testing::Test { };
@@ -42,22 +42,22 @@ namespace {
         SDL_Quit();
     }
 
-    TEST_F(WindowTest, TestRandomScreen) {
-        Window window(20);
-        Display d;
-        bool quit = false;
-        while (!quit) {
-            SDL_Event e;
-            while (SDL_PollEvent(&e)) {
-                for (int i = 0; i < Display::WIDTH * Display::HEIGHT; ++i){
-                    d.getDisplay()[i] = (std::rand() % 2 == 0) ? 0x00 : 0xffffffff;
-                }
-                window.render(d.getDisplay());
-                SDL_Delay(1000);
-                if (e.type == SDL_QUIT) {
-                    quit = SDL_TRUE;
-                }
-            }
-        }
-    }
+//    TEST_F(WindowTest, TestRandomScreen) {
+//        Window window = Window();
+//        Display d;
+//        bool quit = false;
+//        while (!quit) {
+//            SDL_Event e;
+//            while (SDL_PollEvent(&e)) {
+//                for (int i = 0; i < Display::WIDTH * Display::HEIGHT; ++i){
+//                    d.getDisplay()[i] = (std::rand() % 2 == 0) ? 0x00 : 0xffffffff;
+//                }
+//                window.render(d.getDisplay());
+//                SDL_Delay(1000);
+//                if (e.type == SDL_QUIT) {
+//                    quit = SDL_TRUE;
+//                }
+//            }
+//        }
+//    }
 }

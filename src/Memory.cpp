@@ -3,7 +3,7 @@
  * Author: Lisa (Chuci) Liu
  */
 
-#include "core/memory.h"
+#include "Memory.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>

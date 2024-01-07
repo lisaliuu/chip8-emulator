@@ -10,8 +10,9 @@
 #include <stack>
 #include <chrono>
 #include <thread>
-#include "display.h"
-#include "memory.h"
+#include "Display.h"
+#include "Memory.h"
+#include "Opcode.h"
 
 
 /**
@@ -29,37 +30,6 @@ struct Cpu{
     std::chrono::steady_clock::time_point prevTickTime;
 
     Cpu();
-
-
-};
-
-/**
- * @struct Opcode
- * @brief  This struct represents a Chip8 opcode with accessor methods for decoding
- *         the opcode.
- */
-struct Opcode{
-public:
-    // Constr
-    Opcode(uint16_t inOp);
-
-    // Accesses the second nibble, X in register VX.
-    uint8_t getX() const;
-
-    // Accesses the third nibble, Y in register VY.
-    uint8_t getY() const;
-
-    // Accesses the fourth nibble.
-    uint8_t getN() const; // fourth nibble
-
-    // Accesses the third and fourth nibble.
-    uint8_t getNN() const;
-
-    // Accesses the second, third, and fourth nibble.
-    uint16_t getNNN() const;
-
-private:
-    uint16_t rawInstr;
 };
 
 /**
@@ -85,6 +55,8 @@ private:
     Memory memory;
 
     void incrementPC();
+
+    void runInstruction(Opcode instr);
 
     // 00E0 - Clear display
     void CLS();

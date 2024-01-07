@@ -16,6 +16,9 @@
  */
 class Memory {
 public:
+    // Starting address of ROM.
+    static constexpr unsigned int ROM_START_ADDRESS = 0x0200;
+
      // Constructor. Fills the memory with 0 and font sprites.
     Memory();
 
@@ -28,12 +31,11 @@ public:
     // Subscript operator to get specified element in memory - checks bound.
     uint8_t& operator[](int index);
 
+    friend class Chip8;
+
 private:
     // Size of Chip8 memory - 4096 bytes.
     static constexpr unsigned int MEM_SIZE = 0x1000;
-
-    // Starting address of ROM.
-    static constexpr unsigned int ROM_START_ADDRESS = 0x0200;
 
     // Size of font set storage in memory.
     static constexpr unsigned int FONT_SET_SIZE = 0x50;

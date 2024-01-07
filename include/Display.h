@@ -8,6 +8,8 @@
 
 #include <array>
 
+//class Chip8;
+
 /**
  * @class Display
  * @brief This class represents the display of the Chip8 as a 64*32 array where.
@@ -30,7 +32,7 @@ public:
     // Fills display array with 0
     void clearScreen();
 
-    uint32_t* getDisplay();
+    friend class Chip8;
 
 private:
     // Array representing the Chip8 display where each element is a pixel.
