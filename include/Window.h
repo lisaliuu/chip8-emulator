@@ -14,14 +14,11 @@ public:
     explicit Window();
     ~Window();
     void render(const uint32_t * pixels);
-    void getKeyboardInput();
-    bool isRunning();
 
 private:
     SDL_Window* window;
     SDL_Renderer* renderer;
     SDL_Texture* texture;
-    bool running;
 };
 
 #endif //CHIP8_WINDOW_H

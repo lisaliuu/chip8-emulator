@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Chip8.h"
 #include "Window.h"
+#include "EventHandler.h"
 
 std::pair<std::string, int> parseArgs(int argc, const char * argv[]);
 
@@ -16,14 +17,18 @@ int main(int argc, const char * argv[]) {
 
     // Initialize platform
     Window w = Window();
+    Keypad k = Keypad();
+
+    // Initialize event handler for keyboard
+    EventHandler e = EventHandler();
 
     // Main loop: fetch, decode, execute
-    while(w.isRunning()){
+    while(true){
+        e.handleEvent(k);
         c8.cycle();
         c8.handleTime(parsedArgs.second);
+        w.render(c8.getDisplay());
     }
-
-    return 0;
 }
 
 std::pair<std::string, int> parseArgs(int argc, const char * argv[]){

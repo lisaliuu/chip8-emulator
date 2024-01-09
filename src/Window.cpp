@@ -46,23 +46,3 @@ void Window::render(const uint32_t * pixels){
     // Render to screen
     SDL_RenderPresent(renderer);
 }
-
-void Window::getKeyboardInput(){
-    SDL_Event event;
-    while(SDL_PollEvent(&event)){
-        switch(event.type){
-            case SDL_QUIT:
-                running = false;
-                break;
-            case SDL_KEYDOWN:
-
-                break;
-            case SDL_KEYUP:
-                break;
-        }
-    }
-}
-
-bool Window::isRunning(){
-    return running;
-}

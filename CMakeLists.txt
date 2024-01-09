@@ -37,7 +37,8 @@ set(SOURCE_FILES
         src/Chip8.cpp
         src/Window.cpp
         src/Opcode.cpp
-        src/EventHandler.cpp)
+        src/EventHandler.cpp
+        src/Keypad.cpp)
 set(TEST_FILES
         tests/memoryTest.cpp
         tests/windowTest.cpp

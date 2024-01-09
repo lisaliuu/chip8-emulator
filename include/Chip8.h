@@ -49,6 +49,8 @@ public:
 
     void cycle();
 
+    uint32_t* getDisplay();
+
 private:
     Display display;
     Cpu cpu;

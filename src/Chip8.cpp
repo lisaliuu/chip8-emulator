@@ -18,6 +18,10 @@ void Chip8::loadProgram(const std::string& filePath){
     return memory.loadProgram(filePath);
 }
 
+uint32_t* Chip8::getDisplay(){
+    return display.displayArr;
+}
+
 void Chip8::incrementPC() {
     cpu.pc+=2;
 }
@@ -147,14 +151,13 @@ void Chip8::handleTime(int frameRate){
 void Chip8::cycle() {
     // fetch
     uint16_t instr = memory.memoryArr[cpu.pc]<<8 | memory.memoryArr[cpu.pc+1];
-    cpu.pc+=2;
+    incrementPC();
 
     // decode + execute
     Opcode op = Opcode(instr);
 
     // execute
     runInstruction(op);
-
 }
 
 void Chip8::CLS() {
