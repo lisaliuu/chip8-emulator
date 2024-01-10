@@ -42,22 +42,23 @@ namespace {
         SDL_Quit();
     }
 
-//    TEST_F(WindowTest, TestRandomScreen) {
-//        Window window = Window();
-//        Display d;
-//        bool quit = false;
-//        while (!quit) {
-//            SDL_Event e;
-//            while (SDL_PollEvent(&e)) {
-//                for (int i = 0; i < Display::WIDTH * Display::HEIGHT; ++i){
+    TEST_F(WindowTest, TestRandomScreen) {
+        Window window = Window();
+        Display d;
+        bool quit = false;
+        while (!quit) {
+            SDL_Event e;
+            while (SDL_PollEvent(&e)) {
+                for (int i = 0; i < Display::WIDTH * Display::HEIGHT; ++i){
 //                    d.getDisplay()[i] = (std::rand() % 2 == 0) ? 0x00 : 0xffffffff;
-//                }
-//                window.render(d.getDisplay());
-//                SDL_Delay(1000);
-//                if (e.type == SDL_QUIT) {
-//                    quit = SDL_TRUE;
-//                }
-//            }
-//        }
-//    }
+                    d.displayArr[i]=0xffffffff;
+                }
+                window.render(d.displayArr);
+                SDL_Delay(1000);
+                if (e.type == SDL_QUIT) {
+                    quit = SDL_TRUE;
+                }
+            }
+        }
+    }
 }

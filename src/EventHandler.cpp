@@ -9,7 +9,6 @@ void EventHandler::handleEvent(Keypad& k){
         switch (event.type) {
             case SDL_QUIT:
                 exit(EXIT_SUCCESS);
-                break;
             case SDL_KEYUP:
             case SDL_KEYDOWN:
                 SDL_Scancode sc = event.key.keysym.scancode;

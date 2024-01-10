@@ -17,9 +17,10 @@ Memory::Memory() {
               begin(memoryArr)+FONT_START_ADDRESS);
 }
 
-void Memory::loadProgram(const std::string& filePath) {
+void Memory::loadProgram(const std::string& fileName) {
     try{
-        std::cout<<filePath;
+        std::string filePath = "../roms/"+fileName;
+        std::cout<<"File to open: "<<filePath<<std::endl;
         // Attempt to open ROM file as binary
         std::ifstream file (filePath, std::ios::binary);
 

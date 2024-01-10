@@ -22,15 +22,12 @@ uint32_t* Chip8::getDisplay(){
     return display.displayArr;
 }
 
-void Chip8::incrementPC() {
-    cpu.pc+=2;
-}
-
 void Chip8::runInstruction(Opcode instr){
     switch(instr.getHigh()){
         case 0x0000:
             switch(instr.getNN()){
                 case 0x00E0:
+                    CLS();
                     break;
                 case 0x00EE:
                     break;
@@ -38,8 +35,10 @@ void Chip8::runInstruction(Opcode instr){
                     instr.reportInvalidInstr();
                     break;
             }
+            break;
 
         case 0x1000:
+            JMP(instr);
             break;
         case 0x2000:
             break;
@@ -50,8 +49,10 @@ void Chip8::runInstruction(Opcode instr){
         case 0x5000:
             break;
         case 0x6000:
+            LD_VX_NN(instr);
             break;
         case 0x7000:
+            ADD_VX_NN(instr);
             break;
         case 0x8000:
             switch(instr.getN()){
@@ -71,11 +72,12 @@ void Chip8::runInstruction(Opcode instr){
                     instr.reportInvalidInstr();
                     break;
             }
-
+            break;
             case 0x9000:
                 break;
 
             case 0xA000:
+                LD_I(instr);
                 break;
 
             case 0xB000:
@@ -85,6 +87,7 @@ void Chip8::runInstruction(Opcode instr){
                 break;
 
             case 0xD000:
+                DRW(instr);
                 break;
 
             case 0xE000:
@@ -123,9 +126,10 @@ void Chip8::runInstruction(Opcode instr){
                         instr.reportInvalidInstr();
                         break;
                 }
-                default:
-                    instr.reportInvalidInstr();
-                    break;
+                break;
+            default:
+                instr.reportInvalidInstr();
+                break;
     }
 }
 
@@ -142,18 +146,18 @@ void Chip8::handleTime(int frameRate){
         }
     }
     // frameRate in Hz = 1/frameRate seconds = 1/frameRate * 1000 * 1000 microseconds
-    auto timeInMicroseconds = std::chrono::duration_cast<std::chrono::microseconds>(
-            std::chrono::duration<double>(1.0/frameRate * 1000 * 1000)
-    );
-    std::this_thread::sleep_for(timeInMicroseconds);
+//    auto timeInMicroseconds = std::chrono::duration_cast<std::chrono::microseconds>(
+//            std::chrono::duration<double>(1.0/frameRate * 1000 * 1000)
+//    );
+    std::this_thread::sleep_for(std::chrono::microseconds(int(1.0/frameRate * 1000 * 1000)));
 }
 
 void Chip8::cycle() {
     // fetch
     uint16_t instr = memory.memoryArr[cpu.pc]<<8 | memory.memoryArr[cpu.pc+1];
-    incrementPC();
+    cpu.pc+=2;
 
-    // decode + execute
+    // decode
     Opcode op = Opcode(instr);
 
     // execute
@@ -179,24 +183,25 @@ void Chip8::CALL(const Opcode& op) {
 
 void Chip8::SE_VX_NN(const Opcode& op) {
     if (cpu.registers[op.getX()] == op.getNN()) {
-        incrementPC();
+        cpu.pc+=2;
     }
 }
 
 void Chip8::SNE_VX_NN(const Opcode& op) {
     if (cpu.registers[op.getX()] != op.getNN()) {
-        incrementPC();
+        cpu.pc+=2;
     }
 }
 
 void Chip8::SE_VX_VY(const Opcode& op) {
     if (cpu.registers[op.getX()] == cpu.registers[op.getY()]) {
-        incrementPC();
+        cpu.pc+=2;
     }
 }
 
 void Chip8::LD_VX_NN(const Opcode& op) {
     cpu.registers[op.getX()] = op.getNN();
+
 }
 
 void Chip8::ADD_VX_NN(const Opcode& op) {
@@ -208,24 +213,20 @@ void Chip8::LD_I(const Opcode& op) {
 }
 
 void Chip8::DRW(const Opcode& op) {
-    uint8_t xStart = cpu.registers[op.getX()];
-    uint8_t yStart = cpu.registers[op.getY()];
-    xStart %= Display::WIDTH;
-    yStart %= Display::HEIGHT;
-    uint8_t yEnd = yStart+op.getN();
-    for(auto y=yStart;y<yEnd;++y){
-        cpu.registers[0xF]=0;
-        uint8_t drawSpriteVal = memory[cpu.i+y];
+    cpu.registers[0xF] = 0;
+    for(auto y=0;y<op.getN();++y){
+        uint8_t spriteVal = memory[cpu.i+y];
         //draw bits from most to least significant
-        uint16_t py = yStart+y;
         for(int x=0;x<8;++x){
-            if(drawSpriteVal&(0b10000000>>x)){
-                uint16_t px = xStart+x;
-                uint16_t p = px+py*Display::WIDTH;
+            // calculate index in display
+            uint16_t px = (cpu.registers[op.getX()]+x) % Display::WIDTH;
+            uint16_t py = ((cpu.registers[op.getY()]+y) % Display::HEIGHT) * Display::WIDTH;
+            uint16_t p = px+py;
+            if(spriteVal&(0b10000000>>x)){
                 if(display[p]){
                     cpu.registers[0xF]=1;
                 }
-                display[p]^=1;
+                display[p]=~display[p];
             }
         }
     }

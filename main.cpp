@@ -11,6 +11,7 @@ int main(int argc, const char * argv[]) {
     // Initialize Chip8 emulator
     std::pair<std::string, int> parsedArgs = parseArgs(argc, argv);
     Chip8 c8 = Chip8();
+    std::cout<<parsedArgs.first<<" "<<std::to_string(parsedArgs.second)<<std::endl;
 
     // Load ROM
     c8.loadProgram(parsedArgs.first);

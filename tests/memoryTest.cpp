@@ -9,8 +9,8 @@
 namespace {
 
     // Sample data
-    std::string EXISTING_FILE_NAME = "../roms/test.ch8";
-    std::string NO_EXISTING_FILE_NAME = "../roms/tst.ch8";
+    std::string EXISTING_FILE_NAME = "IBM_Logo.ch8";
+    std::string NO_EXISTING_FILE_NAME = "tst.ch8";
 
     // The test fixture for testing memory.
     class MemoryTest : public ::testing::Test { };

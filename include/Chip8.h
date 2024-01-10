@@ -56,8 +56,6 @@ private:
     Cpu cpu;
     Memory memory;
 
-    void incrementPC();
-
     void runInstruction(Opcode instr);
 
     // 00E0 - Clear display
@@ -82,7 +80,7 @@ private:
     void SE_VX_VY(const Opcode& op);
 
     // 6XNN - Set the value NN in reg[VX]
-    void LD_VX_NN(const Opcode& in);
+    void LD_VX_NN(const Opcode& op);
 
     // 7XNN - Add the value NN to reg[VX]
     void ADD_VX_NN(const Opcode& op);

@@ -34,7 +34,7 @@ public:
 
     friend class Chip8;
 
-private:
+//private:
     // Array representing the Chip8 display where each element is a pixel.
     uint32_t displayArr [WIDTH * HEIGHT];
 };
