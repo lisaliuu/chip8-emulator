@@ -8,12 +8,11 @@
 
 #include <array>
 
-//class Chip8;
-
 /**
  * @class Display
- * @brief This class represents the display of the Chip8 as a 64*32 array where.
- *        each element is a pixel.
+ * @brief Display of the Chip8 implemented with a 64*32 array where.
+ *        each element is a pixel. This class provides access to and information
+ *        about the Chip8 display array.
  */
 class Display {
 public:
@@ -23,19 +22,24 @@ public:
     // Height of display
     static const unsigned int HEIGHT = 32;
 
+    // Creates display array filled with 0
     Display();
 
+    // Returns a const reference of the pixel stored at specified index in display array
     const uint32_t& operator[] (int index) const;
 
+    // Returns a reference of the pixel stored at specified index in display array
     uint32_t& operator[] (int index);
 
     // Fills display array with 0
     void clearScreen();
 
-    friend class Chip8;
+    // Returns display array
+    uint32_t* getDisplay();
 
-//private:
-    // Array representing the Chip8 display where each element is a pixel.
+private:
+    // Chip8 display where each element is a pixel
     uint32_t displayArr [WIDTH * HEIGHT];
+
 };
 #endif //CHIP8_DISPLAY_H

@@ -31,11 +31,15 @@ uint16_t Opcode::getHigh() const {
 }
 
 std::string Opcode::toString() const {
-    std::ostringstream oss;
-    oss << opcode;
-    return oss.str();
+    std::stringstream ss;
+    ss<< std::hex << opcode;
+    return ss.str();
 }
 
-void Opcode::reportInvalidInstr(){
-    std::cerr<<"Invalid instruction: "<< toString();
+void Opcode::reportInvalidInstr() const{
+    std::cerr<<"Invalid instruction: "<< toString()<<std::endl;
+}
+
+void Opcode::printInstr() const{
+    std::cout<<toString()<<std::endl;
 }

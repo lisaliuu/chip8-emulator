@@ -13,6 +13,7 @@
 #include "Display.h"
 #include "Memory.h"
 #include "Opcode.h"
+#include "EventHandler.h"
 
 
 /**
@@ -37,7 +38,6 @@ struct Cpu{
  *          an array of size 4096 that represents the RAM of the Chip8
  * @details Functionalities are creating and loading ROMs into the memory
  *          array.
- * @author  Lisa (Chuci) Liu
  */
 class Chip8{
 public:
@@ -47,191 +47,124 @@ public:
 
     void handleTime(int frameRate);
 
-    void cycle();
+    void cycle(const Keypad& k);
 
     uint32_t* getDisplay();
 
 private:
-    Display display;
     Cpu cpu;
+    Display display;
     Memory memory;
 
-    void runInstruction(Opcode instr);
+    std::unordered_map<std::string, size_t> instrCount;
 
-    // 00E0 - Clear display
+    void runInstruction(const Opcode& instr, const Keypad& k);
+
+    void printInstrCount() const;
+
+    void exitProgram(const Opcode& instr);
+
+    // 00E0
     void CLS();
 
-    // 00EE - Return from subroutine
+    // 00EE
     void RET();
 
-    // 1NNN - Jump to memory location NNN
+    // 1NNN
     void JMP(const Opcode& op);
 
-    // 2NNN - Call subroutine at NNN
+    // 2NNN
     void CALL(const Opcode& op);
 
-    // 3XNN - Skip next instruction if reg[VX] equals NN
+    // 3XNN
     void SE_VX_NN(const Opcode& op);
 
-    // 4XNN - Skip next instruction if reg[VX] does not equal NN
+    // 4XNN
     void SNE_VX_NN(const Opcode& op);
 
-    // 5XY0 - Skip next instruction if reg[VX] = reg[VY]
+    // 5XY0
     void SE_VX_VY(const Opcode& op);
 
-    // 6XNN - Set the value NN in reg[VX]
+    // 6XNN
     void LD_VX_NN(const Opcode& op);
 
-    // 7XNN - Add the value NN to reg[VX]
+    // 7XNN
     void ADD_VX_NN(const Opcode& op);
 
-//// 8xy0 - Stores the value of register Vy in register Vx.
-//    void LD_VX_VY(Opcode in, Cpu *cpu) {
-//        cpu->regs[in.x()] = cpu->regs[in.y()];
-//    }
-//
-//// 8xy1 - Performs a bitwise OR on the values of Vx and Vy.
-//    void OR_VX_VY(Opcode in, Cpu *cpu) {
-//        cpu->regs[in.x()] |= cpu->regs[in.y()];
-//    }
-//
-//// 8xy2 - Performs a bitwise AND on the values of Vx and Vy.
-//    void AND_VX_VY(Opcode in, Cpu *cpu) {
-//        cpu->regs[in.x()] &= cpu->regs[in.y()];
-//    }
-//
-//// 8xy3 - Performs a bitwise exclusive OR on the values of Vx and Vy.
-//    void XOR_VX_VY(Opcode in, Cpu *cpu) {
-//        cpu->regs[in.x()] ^= cpu->regs[in.y()];
-//    }
-//
-//// 8xy4 - Set Vx = Vx + Vy, set VF = carry.
-//    void ADD_VX_VY(Opcode in, Cpu *cpu) {
-//        uint16_t sum = cpu->regs[in.x()] + cpu->regs[in.y()];
-//        cpu->regs[0x0F] = sum > 0xFF ? 1 : 0;
-//        cpu->regs[in.x()] = sum & 0xFF;
-//    }
-//
-//// 8xy5 - Set Vx = Vx - Vy, set VF = NOT borrow.
-//    void SUB_VX_VY(Opcode in, Cpu *cpu) {
-//        cpu->regs[0x0F] = cpu->regs[in.x()] > cpu->regs[in.y()] ? 1 : 0;
-//        cpu->regs[in.x()] -= cpu->regs[in.y()];
-//    }
-//
-//// 8xy6 - Set Vx = Vx SHR 1.
-//    void SHR_VX(Opcode in, Cpu *cpu) {
-//        cpu->regs[0x0F] = cpu->regs[in.x()] & 0x01;
-//        cpu->regs[in.x()] >>= 1;
-//    }
-//
-//// 8xy7 - Set Vx = Vy - Vx, set VF = NOT borrow.
-//    void SUBN_VX_VY(Opcode in, Cpu *cpu) {
-//        cpu->regs[0x0F] = cpu->regs[in.y()] > cpu->regs[in.x()] ? 1 : 0;
-//        cpu->regs[in.x()] = cpu->regs[in.y()] - cpu->regs[in.x()];
-//    }
-//
-//// 8xyE - Set Vx = Vx SHL 1.
-//    void SHL_VX(Opcode in, Cpu *cpu) {
-//        cpu->regs[0x0F] = cpu->regs[in.x()] >> 7;
-//        cpu->regs[in.x()] <<= 1;
-//    }
-//
-//// 9xy0 - Skip next instruction if Vx != Vy.
-//    void SNE_VX_VY(Opcode in, Cpu *cpu) {
-//        if (cpu->regs[in.x()] != cpu->regs[in.y()]) {
-//            cpu->pc += 2;
-//        }
-//    }
-//
+    // 8XY0
+    void LD_VX_VY(const Opcode& op);
+
+    // 8XY1
+    void OR_VX_VY(const Opcode& op);
+
+    // 8XY2
+    void AND_VX_VY(const Opcode& op);
+
+    // 8XY3
+    void XOR_VX_VY(const Opcode& op);
+
+    // 8XY4
+    void ADD_VX_VY(const Opcode& op);
+
+    // 8XY5
+    void SUB_VX_VY(const Opcode& op);
+
+    // 8XY6
+    void SHR_VX(const Opcode& op);
+
+    // 8XY7
+    void SUBN_VX_VY(const Opcode& op);
+
+    // 8XYE
+    void SHL_VX(const Opcode& op);
+
+    // 9XY0
+    void SNE_VX_VY(const Opcode& op);
+
     // ANNN - Set the index register I to NNN
     void LD_I(const Opcode& op);
 
-//// Bnnn - Program counter is set to nnn plus the value of V0.
-//    void JP_V0(Opcode in, Cpu *cpu) {
-//        cpu->pc = in.address() + cpu->regs[0x00];
-//    }
-//
-//// Cxkk - Set Vx = random byte AND kk
-//    void RND(Opcode in, Cpu *cpu, Random *rand) {
-//        cpu->regs[in.x()] = (*rand)() & in.byte();
-//    }
-//
+    // BNNN
+    void JP_V0(const Opcode& op);
 
-    // Dxyn - Display N bytes from memory at i and displayed starting at coordinates (VX, VY)
+    // CXNN
+    void RND(const Opcode& op);
+
+    // DXYN
     void DRW(const Opcode& op);
 
-//// Ex9E - Skip instruction if key with the value of Vx is pressed.
-//    void SKP(Opcode in, Cpu *cpu, Input *input) {
-//        if (input->IsPressed(cpu->regs[in.x()]) == 1) {
-//            cpu->pc += 2;
-//        }
-//    }
-//
-//// ExA1 - Skip instruction if key with the value of Vx is not pressed.
-//    void SKNP(Opcode in, Cpu *cpu, Input *input) {
-//        if (input->IsPressed(cpu->regs[in.x()]) == 0) {
-//            cpu->pc += 2;
-//        }
-//    }
-//
-//// Fx07 - Set Vx = delay timer value.
-//    void LD_VX_DT(Opcode in, Cpu *cpu) {
-//        cpu->regs[in.x()] = cpu->t_delay;
-//    }
-//
-//// Fx0A - Wait for a key press, store the value of the key in Vx.
-//    void LD_VX_K(Opcode in, Cpu *cpu, Input *input) {
-//        for (auto i = 0; i < 0x0F; ++i) {
-//            if (input->IsPressed(i)) {
-//                cpu->regs[in.x()] = i;
-//            }
-//        }
-//    }
-//
-//// Fx15 - Set delay timer = Vx.
-//    void LD_DT(Opcode in, Cpu *cpu) {
-//        cpu->t_delay = cpu->regs[in.x()];
-//    }
-//
-//// Fx18 - Set sound timer = Vx.
-//    void LD_ST(Opcode in, Cpu *cpu) {
-//        cpu->t_sound = cpu->regs[in.x()];
-//    }
-//
-//// Fx1E - Set I = I + Vx.
-//    void ADD_I_VX(Opcode in, Cpu *cpu) {
-//        cpu->I += cpu->regs[in.x()];
-//    }
-//
-//// Fx29 - Set I = location of sprite for digit Vx.
-//    void LD_F_VX(Opcode in, Cpu *cpu) {
-//        // Sprites start at 0x00 and the size of each sprite is 5 bytes
-//        cpu->I = cpu->regs[in.x()] * 0x05;
-//    }
-//
-//// Fx33 - Store BCD representation of Vx in memory locations I, I+1, and I+2.
-//    void LD_B_VX(Opcode in, Cpu *cpu, Memory *memory) {
-//        auto& ram = *memory;
-//        ram[cpu->I] = cpu->regs[in.x()] / 100;
-//        ram[cpu->I + 1] = (cpu->regs[in.x()] / 10) % 10;
-//        ram[cpu->I + 2] = cpu->regs[in.x()] % 10;
-//    }
-//
-//// Fx55 - Store regs V0 through Vx in memory starting at location I.
-//    void LD_I_VX(Opcode in, Cpu *cpu, Memory *memory) {
-//        auto& ram = *memory;
-//        for (uint8_t i = 0; i <= in.x(); ++i) {
-//            ram[cpu->I + i] = cpu->regs[i];
-//        }
-//    }
-//
-//// Fx65 - Read regs V0 through Vx from memory starting at location I.
-//    void LD_VX_I(Opcode in, Cpu *cpu, Memory *memory) {
-//        auto& ram = *memory;
-//        for (uint8_t i = 0; i <= in.x(); ++i) {
-//            cpu->regs[i] = ram[cpu->I + i];
-//        }
-//
+    // EX9E
+    void SKP(const Opcode& op, const Keypad& k);
+
+    // EXA1
+    void SKNP(const Opcode& op, const Keypad& k);
+
+    // FX07
+    void LD_VX_DT(const Opcode& op);
+
+    // FX0A
+    void LD_VX_K(const Opcode& op, const Keypad& k);
+
+    // FX15
+    void LD_DT(const Opcode& op);
+
+    // FX18
+    void LD_ST(const Opcode& op);
+
+    // FX1E
+    void ADD_I_VX(const Opcode& op);
+
+    // FX29
+    void LD_F_VX(const Opcode& op);
+
+    // FX33
+    void LD_B_VX(const Opcode& op);
+
+    // FX55
+    void LD_I_VX(const Opcode& op);
+
+    // FX65
+    void LD_VX_I(const Opcode& op);
 
 };
 

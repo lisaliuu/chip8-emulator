@@ -7,6 +7,7 @@
 
 #include <SDL.h>
 #include <unordered_map>
+#include <iostream>
 
 struct Keypad{
     enum keyState
@@ -39,6 +40,10 @@ struct Keypad{
             };
 
     std::array<keyState, 0xF> keys; // key -> keyState
+
+    Keypad();
+
+    void printKeys() const;
 };
 
 class EventHandler {

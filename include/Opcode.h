@@ -38,7 +38,9 @@ public:
     // Accesses the first nibble.
     uint16_t getHigh() const;
 
-    void reportInvalidInstr();
+    void reportInvalidInstr() const;
+
+    void printInstr() const;
 
     friend class Chip8;
 
@@ -46,6 +48,8 @@ private:
     uint16_t opcode;
 
     std::string toString() const;
+
+
 };
 
 

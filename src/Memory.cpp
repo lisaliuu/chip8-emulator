@@ -34,7 +34,6 @@ void Memory::loadProgram(const std::string& fileName) {
             std::cout<<"Failed to load ROM program. File is empty or invalid.";
             exit(EXIT_FAILURE);
         }
-
         // Extract from file stream string
         std::ostringstream ss;
         ss << file.rdbuf();
@@ -48,7 +47,6 @@ void Memory::loadProgram(const std::string& fileName) {
         std::cout<<"Failed to open ROM file.";
         exit(EXIT_FAILURE);
     }
-    
 }
 
 uint8_t& Memory::operator[] (int index){

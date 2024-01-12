@@ -1,13 +1,12 @@
-
 #include <SDL.h>
 #include <iostream>
 #include "Chip8.h"
 #include "Window.h"
-#include "EventHandler.h"
 
 std::pair<std::string, int> parseArgs(int argc, const char * argv[]);
 
 int main(int argc, const char * argv[]) {
+
     // Initialize Chip8 emulator
     std::pair<std::string, int> parsedArgs = parseArgs(argc, argv);
     Chip8 c8 = Chip8();
@@ -23,12 +22,12 @@ int main(int argc, const char * argv[]) {
     // Initialize event handler for keyboard
     EventHandler e = EventHandler();
 
-    // Main loop: fetch, decode, execute
+    // Main loop
     while(true){
-        e.handleEvent(k);
-        c8.cycle();
-        c8.handleTime(parsedArgs.second);
-        w.render(c8.getDisplay());
+        e.handleEvent(k); // Poll keyboard event
+        c8.cycle(k); // Fetch, decode, execute
+        c8.handleTime(parsedArgs.second); // Process delay timer
+        w.render(c8.getDisplay()); // Render to SDL
     }
 }
 
@@ -40,11 +39,11 @@ std::pair<std::string, int> parseArgs(int argc, const char * argv[]){
     }
     int inputFrameRate = std::stoi(argv[2]);
     if (inputFrameRate<0){
-        std::cout<<"[ERROR] Command error. Please input a positive frame rate";
+        std::cerr<<"[ERROR] Command error. Please input a positive frame rate";
         exit(EXIT_FAILURE);
     }
     if (inputFrameRate<400 || inputFrameRate>800){
-        std::cout<<"[WARNING] Suggested frame rate between 400-800 Hz";
+        std::cerr<<"[WARNING] Suggested frame rate between 400-800 Hz";
     }
     return {argv[1], inputFrameRate};
 }
