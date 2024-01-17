@@ -1,0 +1,36 @@
+name: Chip8
+
+on: [push]
+
+jobs:
+  ci:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    strategy:
+      matrix:
+        name: [Clang, GCC]
+
+        include:
+          - name: Clang
+            cc: clang
+            cxx: clang++
+
+          - name: GCC
+            cc: gcc
+            cxx: g++
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Configure.
+        run: |
+          mkdir build
+          cd build
+          cmake -DCMAKE_C_COMPILER=${{ matrix.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.cxx }} ..
+      - name: Build.
+        run: cmake --build build
+      - name: Run.
+        run: |
+          cd bin
+          ./testing
