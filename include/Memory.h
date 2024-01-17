@@ -1,5 +1,5 @@
 /**
- * File name: memory.h
+ * File name: Memory.h
  * Author: Lisa (Chuci) Liu
  */
 
@@ -11,45 +11,37 @@
 
 /**
  * @class Memory
- * @brief This class represents the RAM of the Chip8 as an array of size 4096.
- *        Functions include creating and loading ROMs into the memory array.
+ * @brief Memory class that implements the memory of the Chip8 as an STD array of
+ *        size 4096. This class provides functions to load a ROM into memory and
+ *        access to and information about the address locations in memory.
  */
 class Memory {
 public:
-    // Starting address of ROM.
     static constexpr unsigned int ROM_START_ADDRESS = 0x0200;
 
-     // Constructor. Fills the memory with 0 and font sprites.
+     // Creates and fills the memory array with 0s, then loads font sprites into memory.
     Memory();
 
-     // Loads the ROM at filePath into memory.
+     // Loads the ROM at filePath into memory
     void loadProgram(const std::string& filePath);
 
-    // Const subscript operator to get specified element in memory - checks bound.
+    // Returns a const reference to the element stored at specified index in memory array
     const uint8_t& operator[](int index) const;
 
-    // Subscript operator to get specified element in memory - checks bound.
+    // Returns a reference to the element stored at specified index in memory array
     uint8_t& operator[](int index);
 
     friend class Chip8;
 
 private:
-    // Size of Chip8 memory - 4096 bytes.
     static constexpr unsigned int MEM_SIZE = 0x1000;
-
-    // Size of font set storage in memory.
     static constexpr unsigned int FONT_SET_SIZE = 0x50;
-
-    // Starting address of font data in memory.
     static constexpr unsigned int FONT_START_ADDRESS = 0x0050;
-
-    // Maximum allowed ROM size.
     static constexpr unsigned int MAX_ROM_SIZE = MEM_SIZE - ROM_START_ADDRESS;
 
-    // Array representing the Chip8 memory where each element is a byte.
     std::array<uint8_t, MEM_SIZE> memoryArr;
 
-    // Chip8 font sprites.
+    // Chip8 font sprites
     const std::array<uint8_t, FONT_SET_SIZE> fonts = {
             0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
             0x20, 0x60, 0x20, 0x20, 0x70, // 1

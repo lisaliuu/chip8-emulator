@@ -1,6 +1,7 @@
-//
-// Created by Lisa Liu on 1/6/24.
-//
+/**
+ * File name: EventHandler.cpp
+ * Author: Lisa (Chuci) Liu
+ */
 
 #include "EventHandler.h"
 

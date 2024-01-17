@@ -1,5 +1,5 @@
 /**
- * File name: window.h
+ * File name: Window.h
  * Author: Lisa (Chuci) Liu
  */
 
@@ -9,10 +9,20 @@
 #include "SDL.h"
 #include "Display.h"
 
+
+/**
+ * @class Window
+ * @brief  Window class that utilizes the SDL library to render the Chip8 display.
+ */
 class Window{
 public:
-    explicit Window();
+    // Initializes SDL video of size 32 * 64 with window, render, and texture objects
+    Window();
+
+    // Destroys window and texture objects and terminates the SDL system
     ~Window();
+
+    // Renders pixels of size 32 * 64 onto the SDL video
     void render(const uint32_t * pixels);
 
 private:

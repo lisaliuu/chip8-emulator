@@ -1,6 +1,7 @@
-//
-// Created by Lisa Liu on 1/6/24.
-//
+/**
+ * File name: Opcode.h
+ * Author: Lisa (Chuci) Liu
+ */
 
 #ifndef CHIP8_OPCODE_H
 #define CHIP8_OPCODE_H
@@ -11,35 +12,37 @@
 
 
 /**
- * @struct Opcode
- * @brief  This struct represents a Chip8 opcode with accessor methods for decoding
- *         the opcode.
+ * @class Opcode
+ * @brief  Opcode class with accessor methods for decoding parts of the
+ *         opcode and logging.
  */
 class Opcode {
 public:
-    // Constr
+    // Sets the class' opcode to the inputted opcode
     Opcode(uint16_t inOp);
 
-    // Accesses the second nibble, X in register VX.
+    // Returns the second nibble, X in register VX
     uint16_t getX() const;
 
-    // Accesses the third nibble, Y in register VY.
+    // Returns the third nibble, Y in register VY
     uint16_t getY() const;
 
-    // Accesses the fourth nibble.
-    uint16_t getN() const; // fourth nibble
+    // Returns the fourth nibble
+    uint16_t getN() const;
 
-    // Accesses the third and fourth nibble.
+    // Returns the third and fourth nibble
     uint16_t getNN() const;
 
-    // Accesses the second, third, and fourth nibble.
+    // Returns the second, third, and fourth nibble
     uint16_t getNNN() const;
 
-    // Accesses the first nibble.
+    // Returns the first nibble
     uint16_t getHigh() const;
 
+    // Prints the invalid opcode encountered
     void reportInvalidInstr() const;
 
+    // Prints the opcode
     void printInstr() const;
 
     friend class Chip8;
@@ -47,9 +50,8 @@ public:
 private:
     uint16_t opcode;
 
+    // Returns the opcode in its string representation
     std::string toString() const;
-
-
 };
 
 

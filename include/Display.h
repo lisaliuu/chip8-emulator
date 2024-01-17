@@ -1,5 +1,5 @@
 /**
- * File name: display.h
+ * File name: Display.h
  * Author: Lisa (Chuci) Liu
  */
 
@@ -10,25 +10,22 @@
 
 /**
  * @class Display
- * @brief Display of the Chip8 implemented with a 64*32 array where.
+ * @brief Display class of the Chip8 that is implemented with a 64*32 array where.
  *        each element is a pixel. This class provides access to and information
  *        about the Chip8 display array.
  */
 class Display {
 public:
-    // Width of display
     static const unsigned int WIDTH = 64;
-
-    // Height of display
     static const unsigned int HEIGHT = 32;
 
     // Creates display array filled with 0
     Display();
 
-    // Returns a const reference of the pixel stored at specified index in display array
+    // Returns a const reference to the pixel stored at specified index in display array
     const uint32_t& operator[] (int index) const;
 
-    // Returns a reference of the pixel stored at specified index in display array
+    // Returns a reference to the pixel stored at specified index in display array
     uint32_t& operator[] (int index);
 
     // Fills display array with 0
@@ -38,7 +35,6 @@ public:
     uint32_t* getDisplay();
 
 private:
-    // Chip8 display where each element is a pixel
     uint32_t displayArr [WIDTH * HEIGHT];
 
 };

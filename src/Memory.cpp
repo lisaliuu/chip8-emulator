@@ -1,5 +1,5 @@
 /**
- * File name: memory.cpp
+ * File name: Memory.cpp
  * Author: Lisa (Chuci) Liu
  */
 
@@ -9,10 +9,7 @@
 #include <sstream>
 
 Memory::Memory() {
-    // Clear memory
     memoryArr.fill(0);
-
-    // Load fonts into memory location 0x0050 - 0x009f
     std::copy(begin(fonts), end(fonts),
               begin(memoryArr)+FONT_START_ADDRESS);
 }
@@ -21,6 +18,7 @@ void Memory::loadProgram(const std::string& fileName) {
     try{
         std::string filePath = "../roms/"+fileName;
         std::cout<<"File to open: "<<filePath<<std::endl;
+
         // Attempt to open ROM file as binary
         std::ifstream file (filePath, std::ios::binary);
 
@@ -51,7 +49,7 @@ void Memory::loadProgram(const std::string& fileName) {
 
 uint8_t& Memory::operator[] (int index){
     return const_cast<uint8_t&>
-    (const_cast<const std::array<uint8_t, MEM_SIZE> &>(this->memoryArr)[index]);
+    (const_cast<const std::array<uint8_t, MEM_SIZE> &>(this->memoryArr).at(index));
 }
 
 const uint8_t& Memory::operator[] (int index) const{

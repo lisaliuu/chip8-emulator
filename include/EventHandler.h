@@ -1,6 +1,7 @@
-//
-// Created by Lisa Liu on 1/6/24.
-//
+/**
+ * File name: EventHandler.h
+ * Author: Lisa (Chuci) Liu
+ */
 
 #ifndef CHIP8_EVENTHANDLER_H
 #define CHIP8_EVENTHANDLER_H
@@ -9,6 +10,12 @@
 #include <unordered_map>
 #include <iostream>
 
+/**
+ * @struct Keypad
+ * @brief Keypad struct that tracks of the pressing of keys, mapping input keys
+ *        with SDL to the original 16 keys on the Chip8. The state of the keys
+ *        is maintained in an array.
+ */
 struct Keypad{
     enum keyState
     {
@@ -16,6 +23,7 @@ struct Keypad{
         KEY_DOWN
     };
 
+    // Maps the SDL scancode for the user keyboard to the original Chip8 keys
     std::unordered_map<SDL_Scancode , uint8_t> keyMap =
             {
                     {SDL_SCANCODE_1, 0x01},
@@ -39,15 +47,24 @@ struct Keypad{
                     {SDL_SCANCODE_V, 0x0F},
             };
 
-    std::array<keyState, 0xF> keys; // key -> keyState
+    // Array where each element is the state (up or down) of the key at that index
+    std::array<keyState, 0x10> keys;
 
+    // Initializes all keys to the up state
     Keypad();
 
+    // Prints the state of all the keys
     void printKeys() const;
 };
 
+/**
+ * @class EventHandler
+ * @brief Event Handler class that polls user events, key presses and window
+ *        termination, with SDL and updates the keys state array.
+ */
 class EventHandler {
 public:
+    // Polls for user input, updating the state of the keypad
     void handleEvent(Keypad& k);
 
 private:

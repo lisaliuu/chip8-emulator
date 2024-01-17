@@ -1,5 +1,5 @@
 /**
- * File name: display.cpp
+ * File name: Display.cpp
  * Author: Lisa (Chuci) Liu
  */
 

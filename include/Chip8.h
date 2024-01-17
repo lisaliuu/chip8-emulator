@@ -1,5 +1,5 @@
 /**
- * File name: chip8.h
+ * File name: Chip8.h
  * Author: Lisa (Chuci) Liu
  */
 
@@ -18,8 +18,8 @@
 
 /**
  * @struct Cpu
- * @brief This struct holds variables in and related to the CPU, including
- *        registers, address pointers, timers, and stack.
+ * @brief Elements in the Chip8 CPU (registers, address pointers,
+ *        delay timer, and stack).
  */
 struct Cpu{
     static constexpr unsigned int REG_SIZE = 0x10;
@@ -30,25 +30,31 @@ struct Cpu{
     uint8_t delayTimer;
     std::chrono::steady_clock::time_point prevTickTime;
 
+    // Initializes the pc to ROM start address and all other elements to 0
     Cpu();
 };
 
 /**
- * @brief   Defines the functions of the Memory class that holds
- *          an array of size 4096 that represents the RAM of the Chip8
- * @details Functionalities are creating and loading ROMs into the memory
- *          array.
+ * @class   Chip8
+ * @brief   Chip8 class that interfaces with the CPU, display, memory,
+ *          and instruction set. This class also includes functions that
+ *          aggregates data on instructions from the ROM.
  */
 class Chip8{
 public:
+    // Initializes the cpu, display, and memory class variables
     Chip8();
 
+    // Loads the ROM at filePath into memory
     void loadProgram(const std::string& filePath);
 
+    // Decrements delay timer at a rate of 60 Hz
     void handleTime(int frameRate);
 
+    // Fetches, decodes, and executes the instruction pointed to by the program counter
     void cycle(const Keypad& k);
 
+    // Returns the display array
     uint32_t* getDisplay();
 
 private:
@@ -56,13 +62,20 @@ private:
     Display display;
     Memory memory;
 
+    // Map that counts the number of times an opcode is run
     std::unordered_map<std::string, size_t> instrCount;
 
+    // Decodes the instruction, calling the function that corresponds to the opcode
     void runInstruction(const Opcode& instr, const Keypad& k);
 
+    // Prints out content of instrCount map
     void printInstrCount() const;
 
-    void exitProgram(const Opcode& instr);
+    // Exits the program upon encountering an invalid instruction, printing the invalid
+    // instruction and instrCount map
+    void exitProgramWithError(const Opcode& instr);
+
+    /** OPCODES */
 
     // 00E0
     void CLS();
@@ -121,7 +134,7 @@ private:
     // 9XY0
     void SNE_VX_VY(const Opcode& op);
 
-    // ANNN - Set the index register I to NNN
+    // ANNN
     void LD_I(const Opcode& op);
 
     // BNNN

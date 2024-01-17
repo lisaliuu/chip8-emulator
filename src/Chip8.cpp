@@ -1,5 +1,5 @@
 /**
- * File name: chip8.cpp
+ * File name: Chip8.cpp
  * Author: Lisa (Chuci) Liu
  */
 
@@ -18,23 +18,36 @@ void Chip8::loadProgram(const std::string& filePath){
     return memory.loadProgram(filePath);
 }
 
+void Chip8::handleTime(int frameRate){
+    // 60 Hz = 	0.0167 seconds = 16.7 ms
+    int8_t timeElapsed = static_cast<int8_t>(
+            duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() -
+                                                     cpu.prevTickTime)
+                    .count());
+    if (timeElapsed>16.7){
+        cpu.prevTickTime = std::chrono::steady_clock::now();
+        if(cpu.delayTimer>0){
+            cpu.delayTimer-=1;
+        }
+    }
+    std::this_thread::sleep_for(std::chrono::microseconds(int(1.0/frameRate * 1000 * 1000)));
+}
+
+void Chip8::cycle(const Keypad& k) {
+    // fetch
+    uint16_t instr = memory.memoryArr[cpu.pc]<<8 | memory.memoryArr[cpu.pc+1];
+    cpu.pc+=2;
+
+    // decode
+    Opcode op = Opcode(instr);
+
+    // execute
+    runInstruction(op, k);
+}
+
 uint32_t* Chip8::getDisplay(){
     return display.getDisplay();
 }
-
-void Chip8::printInstrCount() const{
-    std::cout<<"Contents of instruction count map: "<<std::endl;
-    for (auto ic:instrCount){
-        std::cout<<ic.first<<" was called "<<ic.second<<" times"<<std::endl;
-    }
-}
-
-void Chip8::exitProgram(const Opcode& instr) {
-    instr.reportInvalidInstr();
-    printInstrCount();
-    exit(EXIT_FAILURE);
-}
-
 
 void Chip8::runInstruction(const Opcode& instr, const Keypad& k){
     instr.printInstr();
@@ -49,7 +62,7 @@ void Chip8::runInstruction(const Opcode& instr, const Keypad& k){
                     RET();
                     break;
                 default:
-                    exitProgram(instr);
+                    exitProgramWithError(instr);
                     break;
             }
             break;
@@ -112,7 +125,7 @@ void Chip8::runInstruction(const Opcode& instr, const Keypad& k){
                     SHL_VX(instr);
                     break;
                 default:
-                    exitProgram(instr);
+                    exitProgramWithError(instr);
                     break;
             }
             break;
@@ -146,7 +159,7 @@ void Chip8::runInstruction(const Opcode& instr, const Keypad& k){
                     SKNP(instr, k);
                     break;
                 default:
-                    exitProgram(instr);
+                    exitProgramWithError(instr);
                     break;
             }
             break;
@@ -181,41 +194,27 @@ void Chip8::runInstruction(const Opcode& instr, const Keypad& k){
                     LD_VX_I(instr);
                     break;
                 default:
-                    exitProgram(instr);
+                    exitProgramWithError(instr);
                     break;
             }
             break;
         default:
-            exitProgram(instr);
+            exitProgramWithError(instr);
             break;
     }
 }
 
-void Chip8::handleTime(int frameRate){
-    // 60 Hz = 	0.0167 seconds = 16.7 ms
-    int8_t timeElapsed = static_cast<int8_t>(
-            duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() -
-                                                     cpu.prevTickTime)
-                    .count());
-    if (timeElapsed>16.7){
-        cpu.prevTickTime = std::chrono::steady_clock::now();
-        if(cpu.delayTimer>0){
-            cpu.delayTimer-=1;
-        }
+void Chip8::printInstrCount() const{
+    std::cout<<"Contents of instruction count map: "<<std::endl;
+    for (auto ic:instrCount){
+        std::cout<<ic.first<<" was called "<<ic.second<<" times"<<std::endl;
     }
-    std::this_thread::sleep_for(std::chrono::microseconds(int(1.0/frameRate * 1000 * 1000)));
 }
 
-void Chip8::cycle(const Keypad& k) {
-    // fetch
-    uint16_t instr = memory.memoryArr[cpu.pc]<<8 | memory.memoryArr[cpu.pc+1];
-    cpu.pc+=2;
-
-    // decode
-    Opcode op = Opcode(instr);
-
-    // execute
-    runInstruction(op, k);
+void Chip8::exitProgramWithError(const Opcode& instr) {
+    instr.reportInvalidInstr();
+    printInstrCount();
+    exit(EXIT_FAILURE);
 }
 
 void Chip8::CLS() {

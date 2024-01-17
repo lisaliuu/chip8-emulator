@@ -1,7 +1,8 @@
 /**
- * File name: window.cpp
+ * File name: Window.cpp
  * Author: Lisa (Chuci) Liu
  */
+
 #include <iostream>
 #include "Window.h"
 
