@@ -1,13 +1,23 @@
 # Chip8 Emulator
+Chip8 emulator written in C++.
 
-In progress 2023.
+### To Run
 
-Following these guides and repositories:
+### Packages
+
+### Helpful Resources:
+#### Guides:
+- https://en.wikipedia.org/wiki/CHIP-8
 - https://tobiasvl.github.io/blog/write-a-chip-8-emulator/#make-your-own-chip-8-game
 - https://austinmorlan.com/posts/chip8_emulator/
-- https://github.com/shlomnissan/chip8/tree/main
 
-### License
+#### Reference Repositories:
+- https://github.com/shlomnissan/chip8/tree/main
+- https://github.com/berkkirtay/berk-8/tree/main
+
+### ROMs Source
+
+### MIT License
 ```
 Copyright (c) 2023 Lisa Liu
 
