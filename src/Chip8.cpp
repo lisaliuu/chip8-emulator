@@ -18,7 +18,7 @@ void Chip8::loadProgram(const std::string &filePath) {
 void Chip8::handleTime(int frameRate) {
   // 60 Hz = 	0.0167 seconds = 16.7 ms
   int8_t timeElapsed = static_cast<int8_t>(
-      duration_cast<std::chrono::milliseconds>(
+      std::chrono::duration_cast<std::chrono::milliseconds>(
           std::chrono::steady_clock::now() - cpu.prevTickTime)
           .count());
   if (timeElapsed > 16.7) {
@@ -347,37 +347,6 @@ void Chip8::DRW(const Opcode &op) {
       }
     }
   }
-  //    uint8_t n = (op.getN());
-  //    cpu.registers[0xF] = 0;
-  //
-  //    for (auto row = 0; row < n; row++)
-  //    {
-  //        // Processing sprites starting from I to I + height of:
-  //        uint8_t sprite = memory[cpu.i + row];
-  //
-  //        for (auto col = 0; col < 8; col++)
-  //        {
-  //            // Acquiring the pixel positions:
-  //            uint16_t point_y = ((cpu.registers[op.getY()] + row) % 32) * 64;
-  //            uint16_t point_x = ((cpu.registers[op.getX()] + col) % 64);
-  //
-  //            // Acquiring the pixel value at the column and checking
-  //            // if the pixel is chosen to be drawn:
-  //            uint8_t spritePixel = sprite & (0x80 >> col);
-  //            if (spritePixel != 0)
-  //            {
-  //                // If collision happens at sprite, we set VF to 1:
-  //                if (display[point_y + point_x])
-  //                {
-  //                    cpu.registers[0xF] = 1;
-  //                }
-  //                // Flipping the value of pixel, so if it is
-  //                // already drawn, it will be turned off:
-  //                display[point_y + point_x] = ~display[point_y + point_x];
-  //            }
-  //        }
-  //    }
-  //    draw = true;
 }
 
 void Chip8::SKP(const Opcode &op, const Keypad &k) {
