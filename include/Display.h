@@ -7,6 +7,7 @@
 #define CHIP8_DISPLAY_H
 
 #include <array>
+#include <cstdint>
 
 /**
  * @class Display
