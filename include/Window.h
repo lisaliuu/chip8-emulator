@@ -8,6 +8,7 @@
 
 #include "Display.h"
 #include "SDL.h"
+#include <iostream>
 
 /**
  * @class Window

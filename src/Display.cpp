@@ -4,7 +4,9 @@
  */
 
 #include "Display.h"
-Display::Display() { memset(displayArr, 0, sizeof(displayArr)); }
+Display::Display() {
+    std::fill(std::begin(displayArr), std::end(displayArr), 0);
+}
 
 const uint32_t &Display::operator[](int index) const {
   return displayArr[index];
@@ -15,6 +17,8 @@ uint32_t &Display::operator[](int index) {
       const_cast<const uint32_t *>(this->displayArr)[index]);
 }
 
-void Display::clearScreen() { memset(displayArr, 0, sizeof(displayArr)); }
+void Display::clearScreen() {
+    std::fill(std::begin(displayArr), std::end(displayArr), 0);
+}
 
 uint32_t *Display::getDisplay() { return displayArr; }

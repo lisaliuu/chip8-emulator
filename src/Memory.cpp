@@ -4,9 +4,6 @@
  */
 
 #include "Memory.h"
-#include <fstream>
-#include <iostream>
-#include <sstream>
 
 Memory::Memory() {
   memoryArr.fill(0);

@@ -4,7 +4,6 @@
  */
 
 #include "Window.h"
-#include <iostream>
 
 Window::Window() {
   std::cout << "Initializing SDL video..." << std::endl;
