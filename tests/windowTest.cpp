@@ -3,6 +3,8 @@
 //
 #include "../include/Window.h"
 #include <gtest/gtest.h>
+#include <SDL.h>
+#include <chrono>
 
 namespace {
 class WindowTest : public ::testing::Test {};
