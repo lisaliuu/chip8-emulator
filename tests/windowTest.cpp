@@ -58,9 +58,9 @@ TEST_F(WindowTest, TestWindowAndDisplay) {
     SDL_Event e;
     while (SDL_PollEvent(&e)) {
       for (int i = 0; i < Display::WIDTH * Display::HEIGHT; ++i) {
-        d.displayArr[i] = (std::rand() % 2 == 0) ? 0x00 : 0xffffffff;
+        d.getDisplay()[i] = (std::rand() % 2 == 0) ? 0x00 : 0xffffffff;
       }
-      window.render(d.displayArr);
+      window.render(d.getDisplay());
       SDL_Delay(1000);
       if (e.type == SDL_QUIT) {
         quit = SDL_TRUE;

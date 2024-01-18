@@ -21,8 +21,9 @@ TEST_F(MemoryTest, ExtractValidFile) {
 }
 
 TEST_F(MemoryTest, ExtractInvalidFile) {
-  Memory mem = Memory();
-  ASSERT_EXIT({ mem.loadProgram(NO_EXISTING_FILE_NAME); },
+  ASSERT_EXIT({
+    Memory mem = Memory();
+    mem.loadProgram(NO_EXISTING_FILE_NAME); },
               ::testing::ExitedWithCode(EXIT_FAILURE), ".*");
 }
 } // namespace
