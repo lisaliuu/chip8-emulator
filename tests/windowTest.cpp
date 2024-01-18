@@ -1,7 +1,7 @@
 //
 // Created by Lisa Liu on 1/1/24.
 //
-#include "Window.h"
+#include "../include/Window.h"
 #include <gtest/gtest.h>
 
 namespace {
