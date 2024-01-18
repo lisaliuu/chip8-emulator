@@ -16,7 +16,7 @@ void Chip8::loadProgram(const std::string &filePath) {
 }
 
 void Chip8::handleTime(int frameRate) {
-  // 60 Hz = 	0.0167 seconds = 16.7 ms
+  // 60 Hz = 0.0167 seconds = 16.7 ms
   int8_t timeElapsed = static_cast<int8_t>(
       std::chrono::duration_cast<std::chrono::milliseconds>(
           std::chrono::steady_clock::now() - cpu.prevTickTime)
@@ -33,7 +33,7 @@ void Chip8::handleTime(int frameRate) {
 
 void Chip8::cycle(const Keypad &k) {
   // fetch
-  uint16_t instr = memory.memoryArr[cpu.pc] << 8 | memory.memoryArr[cpu.pc + 1];
+  uint16_t instr = memory.getMemory()[cpu.pc] << 8 | memory.getMemory()[cpu.pc + 1];
   cpu.pc += 2;
 
   // decode
@@ -46,7 +46,6 @@ void Chip8::cycle(const Keypad &k) {
 uint32_t *Chip8::getDisplay() { return display.getDisplay(); }
 
 void Chip8::runInstruction(const Opcode &instr, const Keypad &k) {
-  instr.printInstr();
   instrCount[instr.toString()] += 1;
   switch (instr.getHigh()) {
   case 0x0000:
@@ -202,7 +201,7 @@ void Chip8::runInstruction(const Opcode &instr, const Keypad &k) {
 
 void Chip8::printInstrCount() const {
   std::cout << "Contents of instruction count map: " << std::endl;
-  for (auto ic : instrCount) {
+  for (const auto& ic : instrCount) {
     std::cout << ic.first << " was called " << ic.second << " times"
               << std::endl;
   }

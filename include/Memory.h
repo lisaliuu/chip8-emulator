@@ -21,14 +21,12 @@
  */
 class Memory {
 public:
+  static constexpr unsigned int MEM_SIZE = 0x1000;
   static constexpr unsigned int ROM_START_ADDRESS = 0x0200;
 
   // Creates and fills the memory array with 0s, then loads font sprites into
   // memory.
   Memory();
-
-  // Loads the ROM at filePath into memory
-  void loadProgram(const std::string &filePath);
 
   // Returns a const reference to the element stored at specified index in
   // memory array
@@ -38,10 +36,13 @@ public:
   // array
   uint8_t &operator[](int index);
 
-  friend class Chip8;
+  // Loads the ROM at filePath into memory
+  void loadProgram(const std::string &filePath);
+
+  // Returns memory array
+  const std::array<uint8_t, MEM_SIZE>& getMemory();
 
 private:
-  static constexpr unsigned int MEM_SIZE = 0x1000;
   static constexpr unsigned int FONT_SET_SIZE = 0x50;
   static constexpr unsigned int FONT_START_ADDRESS = 0x0050;
   static constexpr unsigned int MAX_ROM_SIZE = MEM_SIZE - ROM_START_ADDRESS;

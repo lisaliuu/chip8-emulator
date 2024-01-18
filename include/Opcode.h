@@ -44,13 +44,11 @@ public:
   // Prints the opcode
   void printInstr() const;
 
-  friend class Chip8;
+  // Returns the opcode in its string representation
+  std::string toString() const;
 
 private:
   uint16_t opcode;
-
-  // Returns the opcode in its string representation
-  std::string toString() const;
 };
 
 #endif // CHIP8_OPCODE_H

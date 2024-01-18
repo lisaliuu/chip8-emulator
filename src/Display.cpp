@@ -5,7 +5,7 @@
 
 #include "Display.h"
 Display::Display() {
-    std::fill(std::begin(displayArr), std::end(displayArr), 0);
+    clearScreen();
 }
 
 const uint32_t &Display::operator[](int index) const {
