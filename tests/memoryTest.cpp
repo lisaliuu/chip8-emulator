@@ -16,12 +16,12 @@ std::string NO_EXISTING_FILE_NAME = "tst.ch8";
 class MemoryTest : public ::testing::Test {};
 
 TEST_F(MemoryTest, ExtractValidFile) {
-  Memory mem;
+  Memory mem = Memory();
   ASSERT_NO_FATAL_FAILURE(mem.loadProgram(EXISTING_FILE_NAME));
 }
 
 TEST_F(MemoryTest, ExtractInvalidFile) {
-  Memory mem;
+  Memory mem = Memory();
   ASSERT_EXIT({ mem.loadProgram(NO_EXISTING_FILE_NAME); },
               ::testing::ExitedWithCode(EXIT_FAILURE), ".*");
 }

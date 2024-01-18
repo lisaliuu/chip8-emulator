@@ -14,6 +14,7 @@
 #include <chrono>
 #include <stack>
 #include <thread>
+#include <cstdint>
 
 /**
  * @struct Cpu

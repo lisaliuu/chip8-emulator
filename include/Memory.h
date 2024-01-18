@@ -6,6 +6,7 @@
 #ifndef CHIP8_MEMORY_H
 #define CHIP8_MEMORY_H
 
+#include <cstdint>
 #include <array>
 #include <string>
 #include <fstream>

@@ -9,6 +9,7 @@
 #include "Display.h"
 #include "SDL.h"
 #include <iostream>
+#include <cstdint>
 
 /**
  * @class Window
