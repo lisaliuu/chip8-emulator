@@ -1,9 +1,25 @@
 # Chip8 Emulator
+
 Chip8 emulator written in C++.
 
-### To Run
 
-### Packages
+### To Run
+```bash
+git clone https://github.com/lisaliuu/chip8-emulator
+cd chip8-emulator
+mkdir build
+cd build
+cmake ..
+make
+cd ..
+cd bin
+./Chip8 tetris.ch8 600
+```
+*Ensure ROM exists in `roms/`*
+
+### Package Dependencies
+- **SDL2**: Used for displaying Chip8 graphics and mapping and gathering keyboard input
+- **GoogleTest**: Used for runing unit tests
 
 ### Helpful Resources:
 #### Guides:
@@ -16,6 +32,12 @@ Chip8 emulator written in C++.
 - https://github.com/berkkirtay/berk-8/tree/main
 
 ### ROMs Source
+- [test_opcode](https://github.com/corax89/chip8-test-rom)
+- [IBM_Logo.ch8](https://github.com/loktar00/chip8/blob/master/roms/IBM%20Logo.ch8)
+- [pong.ch8](https://github.com/loktar00/chip8/blob/master/roms/Pong%20(alt).ch8)
+- [snake.ch8](https://johnearnest.github.io/chip8Archive/play.html?p=snake)
+- [space_invaders.ch8](https://github.com/loktar00/chip8/blob/master/roms/Space%20Invaders%20%5BDavid%20Winter%5D.ch8)
+- [tetris.ch8](https://github.com/loktar00/chip8/blob/master/roms/Tetris%20%5BFran%20Dachille%2C%201991%5D.ch8)
 
 ### MIT License
 ```
