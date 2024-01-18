@@ -33,8 +33,8 @@ int main(int argc, const char * argv[]) {
 
 std::pair<std::string, int> parseArgs(int argc, const char * argv[]){
     if (argc!=3){
-        std::cout<<"[ERROR] Command error. Usage: "<<argv[0]<<" <ROM-path> <frame-rate(400-800)>"
-                                                                 <<std::endl;
+        std::cout<<"[ERROR] Command error. Usage: "<<argv[0]<<" <ROM-filename> <frame-rate"
+                                                              "(400-800)>"<<std::endl;
         exit(EXIT_FAILURE);
     }
     int inputFrameRate = std::stoi(argv[2]);

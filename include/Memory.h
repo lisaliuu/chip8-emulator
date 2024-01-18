@@ -23,6 +23,7 @@ class Memory {
 public:
   static constexpr unsigned int MEM_SIZE = 0x1000;
   static constexpr unsigned int ROM_START_ADDRESS = 0x0200;
+  inline static const std::string ROM_DIR = "../roms/";
 
   // Creates and fills the memory array with 0s, then loads font sprites into
   // memory.

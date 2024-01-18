@@ -22,7 +22,7 @@ const uint8_t &Memory::operator[](int index) const {
 
 void Memory::loadProgram(const std::string &fileName) {
     try {
-        std::string filePath = "../roms/" + fileName;
+        std::string filePath = ROM_DIR + fileName;
         std::cout << "File to open: " << filePath << std::endl;
 
         // Attempt to open ROM file as binary
