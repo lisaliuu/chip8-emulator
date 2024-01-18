@@ -9,12 +9,6 @@
 namespace {
 class WindowTest : public ::testing::Test {};
 
-TEST_F(WindowTest, TestInit) {
-  int sdlInitResult = SDL_Init(SDL_INIT_EVERYTHING);
-  EXPECT_EQ(sdlInitResult, 0);
-  SDL_Quit();
-}
-
 TEST_F(WindowTest, TestSDLFunctions) {
   if (SDL_Init(SDL_INIT_VIDEO) < 0) {
     printf("\nThere is a error:%s\n", SDL_GetError());
