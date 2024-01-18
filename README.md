@@ -1,7 +1,8 @@
 # Chip8 Emulator
 
-Chip8 emulator written in C++.
+***Chip8 emulator written in C++.***
 
+![tetrisdemo-ezgif com-optimize](https://github.com/lisaliuu/chip8-emulator/assets/82255401/a4a1e9c7-d719-4165-8f30-ee078773d08c)
 
 ### To Run
 ```bash
